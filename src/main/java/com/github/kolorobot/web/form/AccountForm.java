@@ -10,13 +10,11 @@ import com.github.kolorobot.web.validation.SamePasswords;
  * Used for wizard-like account creation
  */
 @SamePasswords(message = "{validation.profile.samePasswords}", groups = { AccountForm.AccountStepTwo.class })
-public class AccountForm implements PasswordAware {
+public class AccountForm implements CredentialsAware {
 
-	public interface AccountStepOne {
-	}
+	public interface AccountStepOne {}
 
-	public interface AccountStepTwo {
-	}
+	public interface AccountStepTwo {}
 	
 	@NotNull(message = "{validation.profile.notNullUsername}", groups = { AccountStepOne.class })
 	private String username;

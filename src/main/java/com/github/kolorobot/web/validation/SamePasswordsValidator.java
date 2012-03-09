@@ -3,15 +3,15 @@ package com.github.kolorobot.web.validation;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.github.kolorobot.web.form.PasswordAware;
+import com.github.kolorobot.web.form.CredentialsAware;
 
-public class SamePasswordsValidator implements ConstraintValidator<SamePasswords, PasswordAware> {
+public class SamePasswordsValidator implements ConstraintValidator<SamePasswords, CredentialsAware> {
 
 	@Override
 	public void initialize(SamePasswords constraintAnnotation) {}
 
 	@Override
-	public boolean isValid(PasswordAware value, ConstraintValidatorContext context) {
+	public boolean isValid(CredentialsAware value, ConstraintValidatorContext context) {
 		
 		String password = value.getPassword();
 		String confirmedPassword = value.getConfirmedPassword();

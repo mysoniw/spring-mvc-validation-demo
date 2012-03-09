@@ -12,7 +12,7 @@ import com.github.kolorobot.web.validation.*;
  */
 @UniqueUsername(message = "{validation.profile.uniqueUsername}")
 @SamePasswords(message = "{validation.profile.samePasswords}")
-public class ProfileForm implements PasswordAware {
+public class ProfileForm implements CredentialsAware {
 
 	@NotNull(message = "{validation.profile.notNullUsername}", groups = { User.class })
 	private String username;

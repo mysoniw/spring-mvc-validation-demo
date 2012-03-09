@@ -4,7 +4,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import com.github.kolorobot.web.form.PasswordAware;
+import com.github.kolorobot.web.form.CredentialsAware;
 
 public class SamePasswordsValidatorTest {
 
@@ -13,9 +13,9 @@ public class SamePasswordsValidatorTest {
 	@Test
 	public void isValid_ConfirmedPasswordEqualToPassword_ReturnsTrue() {
 		// arrange
-		PasswordAware passwordAware = new MyPasswordAware("x", "x");
+		CredentialsAware credentialsAware = new MyPasswordAware("x", "x");
 		// act
-		boolean result = validator.isValid(passwordAware, null);
+		boolean result = validator.isValid(credentialsAware, null);
 		// assert
 		Assert.assertTrue(result);
 
@@ -24,9 +24,9 @@ public class SamePasswordsValidatorTest {
 	@Test
 	public void isValid_ConfirmedPasswordNotEqualToPassword_ReturnsFalse() {
 		// arrange
-		PasswordAware passwordAware = new MyPasswordAware("x", "y");
+		CredentialsAware credentialsAware = new MyPasswordAware("x", "y");
 		// act
-		boolean result = validator.isValid(passwordAware, null);
+		boolean result = validator.isValid(credentialsAware, null);
 		// assert
 		Assert.assertFalse(result);
 
@@ -35,9 +35,9 @@ public class SamePasswordsValidatorTest {
 	@Test
 	public void isValid_NullPasswordAndNotNullConfirmedPassword_ReturnsFalse() {
 		// arrange
-		PasswordAware passwordAware = new MyPasswordAware(null, "x");
+		CredentialsAware credentialsAware = new MyPasswordAware(null, "x");
 		// act
-		boolean result = validator.isValid(passwordAware, null);
+		boolean result = validator.isValid(credentialsAware, null);
 		// assert
 		Assert.assertFalse(result);
 
@@ -46,15 +46,15 @@ public class SamePasswordsValidatorTest {
 	@Test
 	public void isValid_NotNullPasswordAndNullConfirmedPassword_ReturnsFalse() {
 		// arrange
-		PasswordAware passwordAware = new MyPasswordAware("x", null);
+		CredentialsAware credentialsAware = new MyPasswordAware("x", null);
 		// act
-		boolean result = validator.isValid(passwordAware, null);
+		boolean result = validator.isValid(credentialsAware, null);
 		// assert
 		Assert.assertFalse(result);
 
 	}
 
-	private final class MyPasswordAware implements PasswordAware {
+	private final class MyPasswordAware implements CredentialsAware {
 
 		private final String password;
 		private final String confirmedPassword;
@@ -72,6 +72,11 @@ public class SamePasswordsValidatorTest {
 		@Override
 		public String getConfirmedPassword() {
 			return confirmedPassword;
+		}
+
+		@Override
+		public String getUsername() {
+			return null;
 		}
 	}
 

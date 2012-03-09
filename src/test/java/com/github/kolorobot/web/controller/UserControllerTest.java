@@ -25,18 +25,18 @@ public class UserControllerTest {
 	
 	@Before
 	public void before() {
-		WebMvcConfig.initMocks();
+		WebMvcTestConfig.initMocks();
 	}
 	
 	
 	@Test
 	public void list() throws Exception {
-		UserRepository userRepositoryMock = WebMvcConfig.userRepositoryMockInstance();
+		UserRepository userRepositoryMock = WebMvcTestConfig.userRepositoryMockInstance();
 		List<User> users = Collections.singletonList(new User());
 
 		when(userRepositoryMock.findAll()).thenReturn(users);
 		
-		annotationConfigSetup(WebMvcConfig.class).build()
+		annotationConfigSetup(WebMvcTestConfig.class).build()
 				.perform(get("/user/list"))
 				.andExpect(model().attribute("users", users))
 				.andExpect(view().name("user/list"));
@@ -46,7 +46,7 @@ public class UserControllerTest {
 	
 	@Test
 	public void showProfileForm() throws Exception {
-		annotationConfigSetup(WebMvcConfig.class).build()
+		annotationConfigSetup(WebMvcTestConfig.class).build()
 				.perform(get("/user/create"))
 				.andExpect(model().attribute("profileForm", Matchers.isA(ProfileForm.class)))
 				.andExpect(view().name("user/create"));
@@ -54,7 +54,7 @@ public class UserControllerTest {
 	
 	@Test
 	public void create_ProfileFormHasValidationErrors() throws Exception {
-		annotationConfigSetup(WebMvcConfig.class).build()
+		annotationConfigSetup(WebMvcTestConfig.class).build()
 				.perform(post("/user/create")
 						.param("email", "email@email.com"))
 				.andExpect(model().attributeHasErrors("profileForm"))
@@ -63,7 +63,7 @@ public class UserControllerTest {
 	
 	@Test
 	public void create() throws Exception {
-		annotationConfigSetup(WebMvcConfig.class).build()
+		annotationConfigSetup(WebMvcTestConfig.class).build()
 				.perform(post("/user/create")
 						.param("username", "username")
 						.param("password", "1Qaz2wsx")
@@ -73,14 +73,14 @@ public class UserControllerTest {
 				.andExpect(flash().attributeExists("message"))
 				.andExpect(redirectedUrl("list"));
 		
-		UserRepository userRepositoryMock = WebMvcConfig.userRepositoryMockInstance();
+		UserRepository userRepositoryMock = WebMvcTestConfig.userRepositoryMockInstance();
 		verify(userRepositoryMock).save(any(User.class));
 	}
 	
 	
 	@Configuration
 	@EnableWebMvc
-	public static class WebMvcConfig {
+	public static class WebMvcTestConfig {
 		
 		private static UserRepository userRepositoryMockInstance;
 		
